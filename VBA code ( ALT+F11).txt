@@ -1,0 +1,121 @@
+Sub ExportMultiSheetToJS()
+    Dim ws As Worksheet
+    Dim lastRow As Long, i As Long
+    Dim jsonFile As String, folderPath As String
+    Dim fso As Object, fileOut As Object
+    Dim jsonStr As String
+    Dim firstSheet As Boolean, firstItem As Boolean
+    
+    ' ????????? ??????????
+    Dim dateVal As String, descVal As String, personVal As String
+    Dim mainAmount As Double, bdtAmount As Double, rateVal As Double
+    Dim currencyVal As String
+    
+    ' ???? ??????? ??????? ????
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    
+    ' ?. ??????? ??? ??? ??? (Visualization ????????? ????)
+    folderPath = ThisWorkbook.Path & "\Visualization"
+    
+    ' ??????? ?? ????? ???? ????
+    If Not fso.FolderExists(folderPath) Then
+        fso.CreateFolder (folderPath)
+    End If
+    
+    ' ?????? ???
+    jsonFile = folderPath & "\data.js"
+    
+    ' JSON ??????? ????
+    jsonStr = "const allSheetsData = {" & vbCrLf
+    firstSheet = True
+    
+    ' ??????? ??? ??? ???
+    For Each ws In ThisWorkbook.Worksheets
+        lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+        
+        If lastRow > 1 Then
+            If Not firstSheet Then jsonStr = jsonStr & "," & vbCrLf
+            jsonStr = jsonStr & "  '" & ws.Name & "': [" & vbCrLf
+            firstItem = True
+            
+            For i = 2 To lastRow
+                ' ???? ??? ???
+                dateVal = Trim(ws.Cells(i, 1).Text)       ' Col A: Date
+                descVal = Trim(ws.Cells(i, 2).Value)      ' Col B: Description
+                personVal = Trim(ws.Cells(i, 6).Value)    ' Col F: Person
+                If IsError(personVal) Then personVal = ""
+                
+                ' ????????? ?????
+                mainAmount = 0
+                bdtAmount = 0
+                rateVal = 0
+                currencyVal = ""
+                
+                ' ?. ???? ?????????????? (Script.js ?? ???? ??? ????)
+                
+                ' --- A. RECEIVED Logic (Col C is USD) ---
+                If InStr(1, descVal, "Received", vbTextCompare) > 0 Then
+                    If IsNumeric(ws.Cells(i, 3).Value) Then mainAmount = ws.Cells(i, 3).Value
+                    currencyVal = "USD"
+                    
+                ' --- B. CONVERSION Logic (Col C=USD, E=BDT) ---
+                ElseIf InStr(1, descVal, "Conversion", vbTextCompare) > 0 Then
+                    ' Script.js ??????? ???? amount ?????? USD ????
+                    If IsNumeric(ws.Cells(i, 3).Value) Then mainAmount = ws.Cells(i, 3).Value ' USD Amount
+                    If IsNumeric(ws.Cells(i, 4).Value) Then rateVal = ws.Cells(i, 4).Value    ' Rate
+                    If IsNumeric(ws.Cells(i, 5).Value) Then bdtAmount = ws.Cells(i, 5).Value  ' BDT Amount
+                    currencyVal = "USD" ' Base currency
+                    
+                ' --- C. SENT Logic (Col G=BDT or Col H=USD) ---
+                ElseIf InStr(1, descVal, "Sent", vbTextCompare) > 0 Then
+                    ' ?????? BDT (Col G) ???
+                    Dim sentBDT As Double: sentBDT = 0
+                    If IsNumeric(ws.Cells(i, 7).Value) Then sentBDT = ws.Cells(i, 7).Value
+                    
+                    If sentBDT > 0 Then
+                        mainAmount = sentBDT
+                        currencyVal = "BDT"
+                    Else
+                        ' BDT ?? ???? USD (Col H) ???
+                        Dim sentUSD As Double: sentUSD = 0
+                        If IsNumeric(ws.Cells(i, 8).Value) Then sentUSD = ws.Cells(i, 8).Value
+                        
+                        If sentUSD > 0 Then
+                            mainAmount = sentUSD
+                            currencyVal = "USD"
+                        End If
+                    End If
+                End If
+                
+                ' ?. ???? ???? ??? (????????? ??????? ????)
+                If dateVal <> "" And (mainAmount > 0 Or bdtAmount > 0) Then
+                    If Not firstItem Then jsonStr = jsonStr & "," & vbCrLf
+                    
+                    ' JSON ??????? ????
+                    jsonStr = jsonStr & "    {" & _
+                    " date: '" & dateVal & "'," & _
+                    " description: '" & descVal & "'," & _
+                    " amount: " & mainAmount & "," & _
+                    " rate: " & rateVal & "," & _
+                    " bdtAmount: " & bdtAmount & "," & _
+                    " currency: '" & currencyVal & "'," & _
+                    " person: '" & personVal & "'" & _
+                    " }"
+                    firstItem = False
+                End If
+            Next i
+            jsonStr = jsonStr & vbCrLf & "  ]"
+            firstSheet = False
+        End If
+    Next ws
+    
+    jsonStr = jsonStr & vbCrLf & "};"
+    
+    ' ?. ???? ??? ???
+    Set fileOut = fso.CreateTextFile(jsonFile, True)
+    fileOut.Write jsonStr
+    fileOut.Close
+    
+    MsgBox "Success! data.js generated at:" & vbCrLf & jsonFile, vbInformation
+End Sub
+

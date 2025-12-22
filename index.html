@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyFlow Mapper</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/summary-card.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <custom-navbar></custom-navbar>
+    
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">MoneyFlow Dashboard</h1>
+        
+        <div class="flex items-center space-x-3">
+            <span class="text-gray-600 font-medium">Select Sheet:</span>
+            <select id="sheetSelector" class="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </select>
+        </div>
+    </div>
+        <!-- <h1 class="text-3xl font-bold text-gray-800 mb-8">MoneyFlow Dashboard</h1> -->
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <custom-summary-card 
+            title="Total USD Received" 
+            value="..." 
+            icon="dollar-sign"
+            color="bg-blue-500">
+            </custom-summary-card>
+    
+        <custom-summary-card 
+            title="Total BDT Conversion" 
+            value="..." 
+            icon="repeat"
+            color="bg-green-500">
+        </custom-summary-card>
+        
+        <custom-summary-card 
+            title="Remaining Balance" 
+            value="..." 
+            icon="alert-circle"
+            color="bg-red-500">
+        </custom-summary-card>
+    </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">USD to BDT Conversions</h2>
+                <canvas id="conversionChart" height="300"></canvas>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Transactions by Person</h2>
+                <canvas id="personChart" height="300"></canvas>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Daily Transaction Flow</h2>
+                <canvas id="flowChart" height="300"></canvas>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Transaction Details</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Person</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="transactionTable">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="data.js"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
