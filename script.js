@@ -1,11 +1,13 @@
 let conversionChartInstance = null;
 let personChartInstance = null;
 let flowChartInstance = null;
+let currentOriginalData = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     const selector = document.getElementById('sheetSelector');
+    const filterBtn = document.getElementById('filterBtn');
+    const resetBtn = document.getElementById('resetBtn');
     
-    // ডাটা আছে কিনা চেক
     if (typeof allSheetsData === 'undefined') return;
 
     // ড্রপডাউন লোড
@@ -20,13 +22,78 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // প্রথম শিট লোড
-    if (sheetNames.length > 0) loadDashboard(allSheetsData[sheetNames[0]]);
+    if (sheetNames.length > 0) {
+        currentOriginalData = allSheetsData[sheetNames[0]]; // মেইন ডাটা সেভ রাখা
+        loadDashboard(currentOriginalData);
+    }
 
-    // চেঞ্জ ইভেন্ট
+    // শিট চেঞ্জ ইভেন্ট
     selector.addEventListener('change', (e) => {
-        loadDashboard(allSheetsData[e.target.value]);
+        currentOriginalData = allSheetsData[e.target.value];
+        // শিট চেঞ্জ করলে ফিল্টার রিসেট করা ভালো
+        document.getElementById('startDate').value = '';
+        document.getElementById('endDate').value = '';
+        loadDashboard(currentOriginalData);
+    });
+
+    // ফিল্টার বাটন ক্লিক
+    filterBtn.addEventListener('click', () => {
+        const startVal = document.getElementById('startDate').value;
+        const endVal = document.getElementById('endDate').value;
+        
+        if (!startVal && !endVal) {
+            alert("Please select a date range first!");
+            return;
+        }
+        
+        const filteredData = currentOriginalData.filter(item => {
+            const itemDate = parseCustomDate(item.date); // আমাদের কাস্টম ফাংশন
+            let isValid = true;
+            
+            if (startVal) {
+                const startDate = new Date(startVal);
+                startDate.setHours(0, 0, 0, 0); // দিনের শুরু
+                if (itemDate < startDate) isValid = false;
+            }
+            
+            if (endVal && isValid) {
+                const endDate = new Date(endVal);
+                endDate.setHours(23, 59, 59, 999); // দিনের শেষ
+                if (itemDate > endDate) isValid = false;
+            }
+            
+            return isValid;
+        });
+
+        loadDashboard(filteredData);
+    });
+
+    // রিসেট বাটন
+    resetBtn.addEventListener('click', () => {
+        document.getElementById('startDate').value = '';
+        document.getElementById('endDate').value = '';
+        loadDashboard(currentOriginalData);
     });
 });
+
+// কাস্টম ডেট পার্সার ফাংশন (Ex: '14-Dec-25' -> Date Object)
+function parseCustomDate(dateStr) {
+    if(!dateStr) return new Date(0); // ইনভ্যালিড ডেট হ্যান্ডেলিং
+
+    const parts = dateStr.split('-'); // ['14', 'Dec', '25']
+    if(parts.length !== 3) return new Date(dateStr); // যদি ফরম্যাট অন্যরকম হয়
+
+    const day = parseInt(parts[0], 10);
+    const monthStr = parts[1];
+    const year = 2000 + parseInt(parts[2], 10); // '25' কে '2025' ধরা হচ্ছে
+    
+    const months = {
+        'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
+        'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
+    };
+    
+    return new Date(year, months[monthStr], day);
+}
 
 function loadDashboard(data) {
     updateTable(data);
