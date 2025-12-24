@@ -34,7 +34,7 @@ const allSheetsData = {
     { date: '4-Dec-25', description: 'Received', amount: 3766, rate: 0, bdtAmount: 0, currency: 'USD', person: '' },
     { date: '4-Dec-25', description: 'Conversion', amount: 747.9181, rate: 124.88, bdtAmount: 93400, currency: 'USD', person: '' },
     { date: '4-Dec-25', description: 'Sent', amount: 105000, rate: 0, bdtAmount: 0, currency: 'BDT', person: 'Wajyed' },
-    { date: '22-Dec-25', description: 'Sent', amount: 100, rate: 0, bdtAmount: 0, currency: 'BDT', person: 'Pinon' }
+    { date: '22-Dec-25', description: 'Sent', amount: 10000, rate: 0, bdtAmount: 0, currency: 'BDT', person: 'Rajbee' }
   ],
   'Hisab of $3766': [
     { date: '4-Dec-25', description: 'Received', amount: 3766, rate: 0, bdtAmount: 0, currency: 'USD', person: '' },
