@@ -36,7 +36,19 @@ const allSheetsData = {
     { date: '4-Dec-25', description: 'Sent', amount: 105000, rate: 0, bdtAmount: 0, currency: 'BDT', person: 'Wajyed' },
     { date: '24-Dec-25', description: 'Sent', amount: 10000, rate: 0, bdtAmount: 0, currency: 'BDT', person: 'Rajbee' },
     { date: '27-Dec-25', description: 'Received', amount: 5005, rate: 0, bdtAmount: 0, currency: 'USD', person: '' },
-    { date: '27-Dec-25', description: 'Conversion', amount: 2506.44, rate: 125.5, bdtAmount: 314558, currency: 'USD', person: '' }
+    { date: '27-Dec-25', description: 'Conversion', amount: 2390.44, rate: 125.5, bdtAmount: 300000, currency: 'USD', person: '' },
+    { date: '27-Dec-25', description: 'Conversion', amount: 580.62, rate: 125.9, bdtAmount: 73100, currency: 'USD', person: '' },
+    { date: '28-Dec-25', description: 'Conversion', amount: 79.36, rate: 126.01, bdtAmount: 10000, currency: 'USD', person: '' },
+    { date: '28-Dec-25', description: 'Conversion', amount: 55.62, rate: 125.86, bdtAmount: 7000, currency: 'USD', person: '' },
+    { date: '28-Dec-25', description: 'Conversion', amount: 116, rate: 125.5, bdtAmount: 14558, currency: 'USD', person: '' },
+    { date: '28-Dec-25', description: 'Conversion', amount: 13.856, rate: 126.3, bdtAmount: 1750, currency: 'USD', person: '' },
+    { date: '28-Dec-25', description: 'Conversion', amount: 95.733, rate: 125.35, bdtAmount: 12000, currency: 'USD', person: '' },
+    { date: '28-Dec-25', description: 'Conversion', amount: 39.89, rate: 125.35, bdtAmount: 5000, currency: 'USD', person: '' },
+    { date: '28-Dec-25', description: 'Conversion', amount: 438.25, rate: 125.5, bdtAmount: 55000, currency: 'USD', person: '' },
+    { date: '28-Dec-25', description: 'Conversion', amount: 1195.22, rate: 125.5, bdtAmount: 150000, currency: 'USD', person: '' },
+    { date: '28-Dec-25', description: 'Sent', amount: 215000, rate: 0, bdtAmount: 0, currency: 'BDT', person: 'Jamil Al Faisal' },
+    { date: '28-Dec-25', description: 'Sent', amount: 385000, rate: 0, bdtAmount: 0, currency: 'BDT', person: 'Jamil Al Faisal' },
+    { date: '28-Dec-25', description: 'Sent', amount: 17000, rate: 0, bdtAmount: 0, currency: 'BDT', person: 'Unknown' }
   ],
   'Hisab of $3766': [
     { date: '4-Dec-25', description: 'Received', amount: 3766, rate: 0, bdtAmount: 0, currency: 'USD', person: '' },
