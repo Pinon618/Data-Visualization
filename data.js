@@ -48,7 +48,17 @@ const allSheetsData = {
     { date: '28-Dec-25', description: 'Conversion', amount: 1195.22, rate: 125.5, bdtAmount: 150000, currency: 'USD', person: '' },
     { date: '28-Dec-25', description: 'Sent', amount: 215000, rate: 0, bdtAmount: 0, currency: 'BDT', person: 'Jamil Al Faisal' },
     { date: '28-Dec-25', description: 'Sent', amount: 385000, rate: 0, bdtAmount: 0, currency: 'BDT', person: 'Jamil Al Faisal' },
-    { date: '28-Dec-25', description: 'Sent', amount: 17000, rate: 0, bdtAmount: 0, currency: 'BDT', person: 'Unknown' }
+    { date: '28-Dec-25', description: 'Sent', amount: 17000, rate: 0, bdtAmount: 0, currency: 'BDT', person: 'Unknown' },
+    { date: '28-Dec-25', description: 'Sent', amount: 2.22, rate: 0, bdtAmount: 0, currency: 'USD', person: 'Fees' },
+    { date: '29-Dec-25', description: 'Received', amount: 2426, rate: 0, bdtAmount: 0, currency: 'USD', person: '' },
+    { date: '29-Dec-25', description: 'Conversion', amount: 127.498, rate: 125.5, bdtAmount: 16000, currency: 'USD', person: '' },
+    { date: '29-Dec-25', description: 'Conversion', amount: 668.79, rate: 125.6, bdtAmount: 84000, currency: 'USD', person: '' },
+    { date: '29-Dec-25', description: 'Conversion', amount: 796.1, rate: 125.6, bdtAmount: 99990, currency: 'USD', person: '' },
+    { date: '29-Dec-25', description: 'Conversion', amount: 151.275, rate: 125.6, bdtAmount: 19000, currency: 'USD', person: '' },
+    { date: '29-Dec-25', description: 'Conversion', amount: 119.43, rate: 125.6, bdtAmount: 15000, currency: 'USD', person: '' },
+    { date: '29-Dec-25', description: 'Conversion', amount: 501, rate: 125.75, bdtAmount: 63000, currency: 'USD', person: '' },
+    { date: '29-Dec-25', description: 'Conversion', amount: 61.76, rate: 125.5, bdtAmount: 7750, currency: 'USD', person: '' },
+    { date: '29-Dec-25', description: 'Sent', amount: 50000, rate: 0, bdtAmount: 0, currency: 'BDT', person: 'Jamil Al Faisal' }
   ],
   'Hisab of $3766': [
     { date: '4-Dec-25', description: 'Received', amount: 3766, rate: 0, bdtAmount: 0, currency: 'USD', person: '' },
